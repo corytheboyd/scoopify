@@ -1,0 +1,12 @@
+{
+  "name": "@scoopify/core",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "echo 'TODO'",
+    "build": "webpack build"
+  },
+  "author": "Cory Boyd <me@corytheboyd.com>",
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
+}

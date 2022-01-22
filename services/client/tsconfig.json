@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowJs": true,
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "moduleResolution": "node"
+  }
+}
