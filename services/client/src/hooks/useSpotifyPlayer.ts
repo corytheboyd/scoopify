@@ -3,7 +3,7 @@ import Player = SpotifyWebPlayback.Player;
 
 let isInstantiating = false;
 
-export const useSpotifyPlayer = () => {
+export const useSpotifyPlayer = (token: string) => {
   let resolve: (player: Player) => void;
   let reject: () => void;
   const deferred = new Promise<Player>((_resolve, _reject) => {
@@ -25,9 +25,7 @@ export const useSpotifyPlayer = () => {
       const player = new window.Spotify.Player({
         name: "Web Playback SDK",
         getOAuthToken: (cb) => {
-          cb(
-            "BQDZ5ABA1AnYVIaNTGm1Yrs7_S4YKFHLacg1gSpc1stnH_03DZOq_wBmOlKTTsMeoF-fI_UT4wBBeTGrbsOQCBRV82JRFICAwG1OcxT7ByuGhWfhvRtYQm5-BxINx0KTYZiQZAsNY3AH4WVH3qjXyrUs219ahJlzRikb"
-          );
+          cb(token);
         },
         volume: 0.5,
       });

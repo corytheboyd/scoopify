@@ -26,9 +26,6 @@ module.exports = {
     port: 3000,
     watchFiles: {
       paths: ["./src/**.*"],
-      options: {
-        usePolling: true,
-      },
     },
   },
 };
