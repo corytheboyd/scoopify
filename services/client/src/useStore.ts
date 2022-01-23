@@ -7,10 +7,12 @@ type Authorization = {
 
 type State = {
   authorization?: Authorization;
+  isAuthorized: () => boolean;
   setAuthorization: (authorization: Authorization) => void;
 };
 
-export const useStore = create<State>((set) => ({
+export const useStore = create<State>((set, get) => ({
   authorization: undefined,
+  isAuthorized: () => !!get().authorization,
   setAuthorization: (authorization) => set({ authorization }),
 }));

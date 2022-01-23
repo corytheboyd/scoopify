@@ -12,11 +12,11 @@ const REDIRECT_URI = "http://localhost:3000/";
 const SCOPES = ["streaming", "playlist-read-private"];
 
 export const Home: React.FC = () => {
-  const { setAuthorization } = useStore();
+  const setAuthorization = useStore((state) => state.setAuthorization);
+  const isAuthorized = useStore((state) => state.isAuthorized);
 
-  // access_token, token_type, expires_in
+  // Set authorization in state from URL hash
   const params = useHashParameters();
-
   const accessToken = params.get("access_token");
   if (accessToken) {
     const expiresIn = parseInt(params.get("expires_in") || "", 10);
@@ -38,7 +38,10 @@ export const Home: React.FC = () => {
 
   return (
     <Chrome>
-      <Button onClick={handleLogin}>Login with Spotify</Button>
+      {!isAuthorized() && (
+        <Button onClick={handleLogin}>Login with Spotify</Button>
+      )}
+      {isAuthorized() && <span>ur in :sunglasses:</span>}
     </Chrome>
   );
 };
