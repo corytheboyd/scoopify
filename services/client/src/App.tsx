@@ -1,18 +1,10 @@
 import * as React from "react";
-import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { CssBaseline } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 
 export const App: React.FC = () => {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.setAttribute("src", "https://sdk.scdn.co/spotify-player.js");
-    script.async = true;
-    document.body.appendChild(script);
-  });
-
   return (
     <div>
       <Helmet>
