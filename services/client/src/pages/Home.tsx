@@ -52,6 +52,10 @@ export const Home: React.FC = () => {
     window.location.href = url.toString();
   }, []);
 
+  const handleResetStorage = useCallback(() => {
+    localStorage.clear();
+  }, []);
+
   return (
     <Chrome>
       <Box>
@@ -68,7 +72,7 @@ export const Home: React.FC = () => {
       </Box>
 
       <Box>
-        <Button variant="outlined" color="error">
+        <Button variant="outlined" color="error" onClick={handleResetStorage}>
           Clear Local State
         </Button>
       </Box>

@@ -1,4 +1,5 @@
 import Player = SpotifyWebPlayback.Player;
+import { useStore } from "../useStore";
 
 let requestedScriptLoad = false;
 
@@ -26,6 +27,11 @@ export const useSpotifyPlayer = (token: string): Promise<Player> => {
         volume: 0.5,
       });
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      global.player = player;
+      console.debug("player", player);
+
       player.addListener("ready", ({ device_id }) => {
         console.debug("Device ID has come online", device_id);
       });
@@ -44,6 +50,11 @@ export const useSpotifyPlayer = (token: string): Promise<Player> => {
 
       player.addListener("account_error", ({ message }) => {
         console.error("account_error", message);
+      });
+
+      player.addListener("player_state_changed", (state) => {
+        console.debug("Player state changed", state);
+        useStore.getState().setSpotifyState(state);
       });
 
       const isConnected = await player.connect();
