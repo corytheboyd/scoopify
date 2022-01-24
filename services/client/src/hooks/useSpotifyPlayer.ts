@@ -1,25 +1,21 @@
-import { useEffect } from "react";
 import Player = SpotifyWebPlayback.Player;
 
-let isInstantiating = false;
+let requestedScriptLoad = false;
 
-export const useSpotifyPlayer = (token: string) => {
-  let resolve: (player: Player) => void;
-  let reject: () => void;
-  const deferred = new Promise<Player>((_resolve, _reject) => {
-    resolve = _resolve;
-    reject = _reject;
-  });
+let _playerResolve: (player: Player) => void;
+let _playerReject: (errorMessage: string) => void;
+const _playerPromise = new Promise<Player>((resolve, reject) => {
+  _playerResolve = resolve;
+  _playerReject = reject;
+});
 
-  useEffect(() => {
-    if (!isInstantiating) {
-      const script = document.createElement("script");
-      script.src = "https://sdk.scdn.co/spotify-player.js";
-      script.async = true;
-      document.body.appendChild(script);
-    } else {
-      isInstantiating = true;
-    }
+export const useSpotifyPlayer = (token: string): Promise<Player> => {
+  if (!requestedScriptLoad) {
+    requestedScriptLoad = true;
+    const script = document.createElement("script");
+    script.src = "https://sdk.scdn.co/spotify-player.js";
+    script.async = true;
+    document.body.appendChild(script);
 
     window.onSpotifyWebPlaybackSDKReady = async () => {
       const player = new window.Spotify.Player({
@@ -52,12 +48,12 @@ export const useSpotifyPlayer = (token: string) => {
 
       const isConnected = await player.connect();
       if (isConnected) {
-        resolve(player);
+        _playerResolve(player);
       } else {
-        reject();
+        _playerReject("Failed to load Spotify Player");
       }
     };
-  }, []);
+  }
 
-  return deferred;
+  return _playerPromise;
 };

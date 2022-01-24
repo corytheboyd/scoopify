@@ -27,5 +27,6 @@ module.exports = {
     watchFiles: {
       paths: ["./src/**.*"],
     },
+    historyApiFallback: true,
   },
 };

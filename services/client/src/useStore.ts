@@ -1,4 +1,5 @@
 import create from "zustand";
+import { persist } from "zustand/middleware";
 
 type Authorization = {
   accessToken: string;
@@ -11,8 +12,13 @@ type State = {
   setAuthorization: (authorization: Authorization) => void;
 };
 
-export const useStore = create<State>((set, get) => ({
-  authorization: undefined,
-  isAuthorized: () => !!get().authorization,
-  setAuthorization: (authorization) => set({ authorization }),
-}));
+export const useStore = create<State>(
+  persist(
+    (set, get) => ({
+      authorization: undefined,
+      isAuthorized: () => !!get().authorization,
+      setAuthorization: (authorization) => set({ authorization }),
+    }),
+    { name: "scoopify" }
+  )
+);
